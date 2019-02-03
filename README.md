@@ -1,5 +1,4 @@
 # Cert-Renoval
-===============
 
 Simple Script to update SSL Certificates
 when using the snap version of NextCloud
