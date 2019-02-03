@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Simple Script to update SSL Certificate
+#	when using the snap version of NextCloud
+#	and a self generated EEF's Let's Encrypt
+
+set -o errexit
+
+if [[ $EUID -ne 0 ]]; then
+   printf "  Not being run as $(tput bold)root! \n $(tput sgr0) \n  Please, check privileges... \n" 
+   exit 1
+fi
+
+printf "\n Updating system :\n\n"
+apt-get update && apt-get upgrade -y
+
+printf "\n\n Stopping services and opening firewall...\n\n"
+systemctl stop snap.nextcloud.apache.service
+ufw allow 801
+
+printf "\n\n Renewing certificates:\n\n"
+certbot renew
+
+printf "\n\n Securing firewall and starting services...\n\n"
+ufw deny 80
+systemctl start snap.nextcloud.apache.service
+
+printf "\n\n All done!! Grab a coffee =) \n\n"
