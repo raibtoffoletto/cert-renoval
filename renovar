@@ -16,7 +16,7 @@ apt-get update && apt-get upgrade -y
 
 printf "\n\n Stopping services and opening firewall...\n\n"
 systemctl stop snap.nextcloud.apache.service
-ufw allow 801
+ufw allow 80
 
 printf "\n\n Renewing certificates:\n\n"
 certbot renew
